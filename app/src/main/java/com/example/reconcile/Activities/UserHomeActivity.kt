@@ -1,12 +1,13 @@
-package com.example.reconcile
+package com.example.reconcile.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.reconcile.R
 
-class MainActivity : AppCompatActivity() {
+class UserHomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_user_home)
     }
 }
