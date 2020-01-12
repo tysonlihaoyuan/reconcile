@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
+import com.example.reconcile.DI.Component.DaggerUserAuthComponent
 import com.example.reconcile.R
 import com.example.reconcile.RegisterActivity
 import com.example.reconcile.Util.ToastUtil
@@ -16,17 +16,18 @@ import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.email
 import kotlinx.android.synthetic.main.activity_register.password
 import kotlinx.android.synthetic.main.activity_register.progressbar
+import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity() , View.OnClickListener{
 
-    val auth: FirebaseAuth by lazy {
-        FirebaseAuth.getInstance()
-    }
+    @Inject
+    internal lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         login.setOnClickListener(this)
         directToRegister.setOnClickListener(this)
+        DaggerUserAuthComponent.create().inject(this)
     }
 
     private fun login(){

@@ -8,19 +8,20 @@ import android.view.View
 import android.widget.Button
 import com.example.reconcile.Activities.LoginActivity
 import com.example.reconcile.Activities.UserHomeActivity
+import com.example.reconcile.DI.Component.DaggerUserAuthComponent
 import com.example.reconcile.Util.ToastUtil
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_register.*
+import javax.inject.Inject
 
 class RegisterActivity : AppCompatActivity() , View.OnClickListener{
 
 
-    val auth: FirebaseAuth by lazy {
-        FirebaseAuth.getInstance()
-    }
+    @Inject
+    internal lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -28,12 +29,13 @@ class RegisterActivity : AppCompatActivity() , View.OnClickListener{
         setContentView(R.layout.activity_register)
         register.setOnClickListener(this)
         directToLogin.setOnClickListener(this)
+        DaggerUserAuthComponent.create().inject(this)
     }
 
     private fun registerUser(){
-        val userEmail = email.text
-        val password = password.text
-        val confirmPassword = confirmPassword.text
+        val userEmail = email.text.toString()
+        val password = password.text.toString()
+        val confirmPassword = confirmPassword.text.toString()
         Log.d(TAG, "register user function called email is $userEmail")
         if(userEmail.isBlank()){
             ToastUtil.also { it.showToast(this, it.EMAIL_IS_EMPTY) }
@@ -43,7 +45,7 @@ class RegisterActivity : AppCompatActivity() , View.OnClickListener{
             ToastUtil.also { it.showToast(this, it.PASSWORD_IS_EMPTY) }
             return
         }
-        if(password.equals(confirmPassword)){
+        if(password != confirmPassword){
 
             ToastUtil.also { it.showToast(this, it.ERROR_TEXT_PASSWORD_DO_NOT_MATCH) }
             return
@@ -52,7 +54,7 @@ class RegisterActivity : AppCompatActivity() , View.OnClickListener{
         progressbar.setProgress(50,true)
         progressbar.visibility = View.VISIBLE
 
-        auth.createUserWithEmailAndPassword(userEmail.toString(), password.toString()).addOnCompleteListener{ task: Task<AuthResult> ->
+        auth.createUserWithEmailAndPassword(userEmail, password).addOnCompleteListener{ task: Task<AuthResult> ->
             if (task.isSuccessful) {
                 Log.d(TAG, "register user with email ${userEmail} is successful")
                 //Registration OK
