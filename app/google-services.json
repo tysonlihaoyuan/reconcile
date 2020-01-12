@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "512286251283",
+    "firebase_url": "https://reconcile-c338c.firebaseio.com",
+    "project_id": "reconcile-c338c",
+    "storage_bucket": "reconcile-c338c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:512286251283:android:2a3e25edea26b7a3daa2e6",
+        "android_client_info": {
+          "package_name": "com.example.reconcile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "512286251283-d4iud87v2sqj8sptf60hg923mbv2n6i6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.reconcile",
+            "certificate_hash": "0123fad0487bcc35f047618adee46db95e79e045"
+          }
+        },
+        {
+          "client_id": "512286251283-qcg23uoptm5eot25d98bnqnduufk05fk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5xOERshfs2obUws5tDsiysrq-2dbsMC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "512286251283-qcg23uoptm5eot25d98bnqnduufk05fk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
