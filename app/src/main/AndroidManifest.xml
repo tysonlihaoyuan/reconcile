@@ -20,6 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.FriendListActivity"></activity>
+        <activity android:name=".Activities.AddfriendActivity"></activity>
     </application>
 
 </manifest>

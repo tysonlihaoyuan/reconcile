@@ -8,6 +8,7 @@ import android.view.View
 import com.example.reconcile.DI.Component.DaggerUserAuthComponent
 import com.example.reconcile.R
 import com.example.reconcile.RegisterActivity
+import com.example.reconcile.Activities.FriendListActivity;
 import com.example.reconcile.Util.ToastUtil
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -42,7 +43,7 @@ class LoginActivity : AppCompatActivity() , View.OnClickListener{
                 Log.d(RegisterActivity.TAG, "login user with email ${userEmail} is successful")
                 //login OK
                 ToastUtil.also { it.showToast(this, it.LOGIN_SUCCESSFUL) }
-                startActivity(Intent(this, UserHomeActivity::class.java ))
+                startActivity(Intent(this, FriendListActivity::class.java ))
             } else {
                 //Registration error
                 ToastUtil.also { it.showToast(this, it.CANNOT_LOGIN_CURRENT_USER) }

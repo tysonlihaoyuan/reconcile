@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import com.example.reconcile.Activities.FriendListActivity
 import com.example.reconcile.Activities.LoginActivity
 import com.example.reconcile.Activities.UserHomeActivity
 import com.example.reconcile.DI.Component.DaggerUserAuthComponent
@@ -59,7 +60,7 @@ class RegisterActivity : AppCompatActivity() , View.OnClickListener{
                 Log.d(TAG, "register user with email ${userEmail} is successful")
                 //Registration OK
                 ToastUtil.also { it.showToast(this, it.REGISTER_SUCCESSFUL_SIGNING_IN) }
-                startActivity(Intent(this, UserHomeActivity::class.java ))
+                startActivity(Intent(this, FriendListActivity::class.java ))
             } else {
                 //Registration error
                 ToastUtil.also { it.showToast(this, it.CANNOT_REGISTER_CURRENT_USER) }
