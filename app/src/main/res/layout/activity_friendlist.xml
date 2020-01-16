@@ -3,14 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/friendlistview1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp">
 
-    </ListView>
+    <ImageButton
+        android:id="@+id/profileImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_menu_myplaces" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_gravity = "bottom|left"
+        android:layout_margin="16dp"
+        app:srcCompat="@android:drawable/btn_dialog" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fb1"
@@ -20,4 +28,5 @@
         android:layout_gravity = "bottom|right"
         android:layout_margin="16dp"
         app:srcCompat="@mipmap/ic_action_add_foreground" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

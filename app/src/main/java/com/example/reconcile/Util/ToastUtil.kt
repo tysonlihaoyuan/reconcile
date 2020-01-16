@@ -11,7 +11,7 @@ object ToastUtil{
     val CANNOT_REGISTER_CURRENT_USER = "Failed to register user"
     val REGISTER_SUCCESSFUL_SIGNING_IN = "Register successful, signing you in..."
     val LOGIN_SUCCESSFUL = "Login successful"
-    val CANNOT_LOGIN_CURRENT_USER = ""
+    val CANNOT_LOGIN_CURRENT_USER = "Cannot login"
     fun showToast(context: Context, text: String, length: Int = Toast.LENGTH_LONG){
         val toast = Toast.makeText(context, text, length)
         toast.show()

@@ -24,6 +24,11 @@ class LoginActivity : AppCompatActivity() , View.OnClickListener{
     @Inject
     internal lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
+        FirebaseAuth.getInstance().currentUser?.let {
+            Log.d(TAG, "LoggedIn Already user email is ${it.email}")
+            startActivity(Intent(this, FriendListActivity::class.java))
+            finish()
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         login.setOnClickListener(this)
