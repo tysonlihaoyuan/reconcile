@@ -10,4 +10,5 @@ class UserAuthModule {
 
     @Provides
     fun providesFirebaseAuth() = FirebaseAuth.getInstance()
+
 }

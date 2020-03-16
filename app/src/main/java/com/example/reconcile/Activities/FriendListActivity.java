@@ -42,7 +42,7 @@ public class FriendListActivity extends AppCompatActivity  implements View.OnCli
         }
         if(v == addNewFriendButton){
             Log.d("friend","click");
-            Intent intent = new Intent(FriendListActivity.this,AddfriendActivity.class);
+            Intent intent = new Intent(FriendListActivity.this,ChatRoomActivity.class);
             startActivity(intent);
         }
     }

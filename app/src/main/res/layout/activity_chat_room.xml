@@ -1,0 +1,30 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Activities.ChatRoomActivity">
+
+    <ListView
+        android:id="@+id/chatroomList"
+        android:layout_width="match_parent"
+        android:layout_height="543dp">
+
+
+    </ListView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fb1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chatroomList"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="bottom|right"
+        android:layout_marginStart="354dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        app:srcCompat="@mipmap/ic_action_add_foreground" />
+</RelativeLayout>

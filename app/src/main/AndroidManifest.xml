@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.AuthEditActivity"></activity>
+        <activity android:name=".Activities.NewRoomActivity"></activity>
+        <activity android:name=".Activities.ChatRoomActivity" />
+        <activity android:name=".Activities.AuthEditActivity" />
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.UserHomeActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".Activities.FriendListActivity" />
         <activity android:name=".Activities.AddfriendActivity" />
