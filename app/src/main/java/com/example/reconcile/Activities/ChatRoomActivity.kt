@@ -40,11 +40,12 @@ class ChatRoomActivity : AppCompatActivity() , View.OnClickListener {
         setContentView(R.layout.activity_chat_room)
         chatList.add(ChatRoom(167454))
         fb1.setOnClickListener(this)
+        //TODO: GETTER rooms
         chatRoomViewModel.rooms.observe(this, Observer {
 
             chatroomList.adapter = object : CommonAdapter<ChatRoom>(
                 this,
-                chatRoomViewModel.rooms.value,
+                it,
                 R.layout.item_cst_swipe
             ) {
                 override fun convert(p0: ViewHolder?, p1: ChatRoom?, p2: Int) {

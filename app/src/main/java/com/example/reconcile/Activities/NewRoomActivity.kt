@@ -3,7 +3,8 @@ package com.example.reconcile.Activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.example.reconcile.DI.Component.DaggerDatabaseComponent
+import com.example.reconcile.DI.Component.ActivityComponent
+import com.example.reconcile.DI.Component.DaggerActivityComponent
 import com.example.reconcile.R
 import com.example.reconcile.ViewModel.data.ChatRoom
 import com.google.firebase.auth.FirebaseAuth
@@ -16,21 +17,22 @@ class NewRoomActivity : AppCompatActivity() , View.OnClickListener{
     @Inject
     internal lateinit var database : CollectionReference
 
-    /*@Inject
-    internal lateinit var auth: FirebaseAuth*/
+    @Inject
+    internal lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_room)
-        DaggerDatabaseComponent.create().inject(this)
-        //DaggerUserAuthComponent.create().inject(this)
+        DaggerActivityComponent.create().inject(this)
+        //DaggerViewModelComponent.create().inject(this)
         addRoom.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         database.add(ChatRoom(id = 10101,
             name = roomName.text.toString(),
-            password = passWord.text.toString()))
+            password = passWord.text.toString(),
+            ownerName = auth.currentUser?.displayName.toString()))
         finish()
     }
 

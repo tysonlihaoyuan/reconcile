@@ -3,7 +3,8 @@ package com.example.reconcile.ViewModel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.reconcile.DI.Component.DaggerDatabaseComponent
+import com.example.reconcile.DI.Component.DaggerViewModelComponent
+
 import com.example.reconcile.ViewModel.data.ChatRoom
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -25,7 +26,7 @@ class ChatRoomViewModel : ViewModel(){
 
     init {
         Log.d(TAG, "onCreate")
-        DaggerDatabaseComponent.create().inject(this)
+        DaggerViewModelComponent.create().inject(this)
         database.addSnapshotListener{ snapshot, e ->
             if(e != null){
                 Log.e(TAG, e.toString())

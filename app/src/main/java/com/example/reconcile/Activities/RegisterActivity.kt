@@ -7,7 +7,7 @@ import android.util.Log
 import android.view.View
 import com.example.reconcile.Activities.FriendListActivity
 import com.example.reconcile.Activities.LoginActivity
-import com.example.reconcile.DI.Component.DaggerUserAuthComponent
+import com.example.reconcile.DI.Component.DaggerActivityComponent
 import com.example.reconcile.Util.ToastUtil
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
@@ -27,7 +27,7 @@ class RegisterActivity : AppCompatActivity() , View.OnClickListener{
         setContentView(R.layout.activity_register)
         register.setOnClickListener(this)
         directToLogin.setOnClickListener(this)
-        DaggerUserAuthComponent.create().inject(this)
+        DaggerActivityComponent.create().inject(this)
     }
 
     private fun registerUser(){

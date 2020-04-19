@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.reconcile.DI.Component.DaggerUserAuthComponent;
 import com.example.reconcile.R;
 import com.example.reconcile.ViewModel.FriendlistViewModel;
 import com.example.reconcile.repository.Friend;
@@ -52,7 +51,8 @@ public class FriendListActivity extends AppCompatActivity  implements View.OnCli
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friendlist);
-        DaggerUserAuthComponent.create().inject(this);
+        //Dagger.create().inject(this);
+
         profileButton = findViewById(R.id.profileImageButton);
         addNewFriendButton = findViewById(R.id.fb1);
         profileButton.setOnClickListener(this);
