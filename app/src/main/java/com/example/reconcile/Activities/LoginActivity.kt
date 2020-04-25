@@ -22,6 +22,7 @@ class LoginActivity : AppCompatActivity() , View.OnClickListener{
 
     @Inject
     internal lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         FirebaseAuth.getInstance().currentUser?.let {
             Log.d(TAG, "LoggedIn Already user email is ${it.email}")
@@ -35,6 +36,7 @@ class LoginActivity : AppCompatActivity() , View.OnClickListener{
         DaggerActivityComponent.create().inject(this)
     }
 
+
     private fun login(){
         val userEmail = email.text
         val password = password.text
@@ -47,7 +49,7 @@ class LoginActivity : AppCompatActivity() , View.OnClickListener{
                 Log.d(RegisterActivity.TAG, "login user with email ${userEmail} is successful")
                 //login OK
                 ToastUtil.also { it.showToast(this, it.LOGIN_SUCCESSFUL) }
-                startActivity(Intent(this, FriendListActivity::class.java ))
+                startActivity(Intent(this, FriendListActivity::class.java ).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
             } else {
                 //Registration error
                 ToastUtil.also { it.showToast(this, it.CANNOT_LOGIN_CURRENT_USER) }
@@ -58,7 +60,7 @@ class LoginActivity : AppCompatActivity() , View.OnClickListener{
 
     override fun onClick(v: View?) {
         when(v){
-            login -> login().also { Log.d(TAG, "Register button clicked") }
+            login -> login().also {Log.d(TAG, "Register button clicked")}
             directToRegister -> startActivity(Intent(this, RegisterActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
         }
 

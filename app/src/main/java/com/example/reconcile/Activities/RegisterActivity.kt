@@ -12,6 +12,7 @@ import com.example.reconcile.Util.ToastUtil
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_register.*
 import javax.inject.Inject
 
@@ -56,6 +57,10 @@ class RegisterActivity : AppCompatActivity() , View.OnClickListener{
             if (task.isSuccessful) {
                 Log.d(TAG, "register user with email ${userEmail} is successful")
                 //Registration OK
+                FirebaseFirestore.getInstance()
+                    .document("users/${FirebaseAuth.getInstance().currentUser?.uid}")
+                    .set(mapOf("activeStatus" to 1, "email" to userEmail))
+
                 ToastUtil.also { it.showToast(this, it.REGISTER_SUCCESSFUL_SIGNING_IN) }
                 startActivity(Intent(this, FriendListActivity::class.java ))
             } else {
