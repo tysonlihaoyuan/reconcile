@@ -14,7 +14,7 @@ import javax.inject.Inject
 class AuthViewModel : ViewModel(){
     @Inject
     internal lateinit var auth: FirebaseAuth
-    internal lateinit var user: FirebaseUser
+    internal var user: FirebaseUser
     internal val email: MutableLiveData<String> by lazy {
         MutableLiveData<String>(auth.currentUser?.email)
     }
@@ -29,10 +29,10 @@ class AuthViewModel : ViewModel(){
         email.value = auth.currentUser?.email
     }
 
-    internal fun updateProfileImage(photoURI: Uri?) : requestStatus{
+    internal fun updateProfileImage(photoURI: Uri?, callback : (requestStatus) -> Unit) : Unit{
         var status = requestStatus.FAIL
         if(photoURI == null){
-            return  status.also { Log.d(TAG, "update profile photo is failed, uri is null") }
+            callback(requestStatus.FAIL)
         }
         user.updateProfile(UserProfileChangeRequest.Builder().
             setPhotoUri(photoURI).build()).addOnCompleteListener { task ->
@@ -47,12 +47,11 @@ class AuthViewModel : ViewModel(){
             else{
                 status = requestStatus.FAIL
             }
+            callback(status)
         }
-        return status
-
     }
 
-    internal fun updateProfile(newDisplayName: String?): requestStatus{
+    internal fun updateProfile(newDisplayName: String?, callback : (requestStatus) -> Unit) : Unit{
         val request = UserProfileChangeRequest.Builder().setDisplayName(newDisplayName).build()
         var status = requestStatus.FAIL
         user.updateProfile(request).addOnCompleteListener { task ->
@@ -61,15 +60,16 @@ class AuthViewModel : ViewModel(){
                 displayName.value = newDisplayName
                 status = requestStatus.SUCESS
             }
-           else if(task.isCanceled){
+            else if(task.isCanceled){
                 Log.d(TAG, "User profile update is canceled.")
                 status = requestStatus.FAIL
             }
             else{
                 status = requestStatus.FAIL
             }
+            callback(status)
         }
-        return status
+
     }
 
     companion object{

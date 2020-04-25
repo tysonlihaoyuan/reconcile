@@ -57,9 +57,9 @@ class LoginActivity : AppCompatActivity() , View.OnClickListener{
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.login -> login().also { Log.d(TAG, "Register button clicked") }
-            R.id.directToRegister -> startActivity(Intent(this, RegisterActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
+        when(v){
+            login -> login().also { Log.d(TAG, "Register button clicked") }
+            directToRegister -> startActivity(Intent(this, RegisterActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
         }
 
     }

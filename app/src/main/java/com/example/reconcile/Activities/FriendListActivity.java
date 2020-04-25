@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.reconcile.DI.Component.DaggerActivityComponent;
 import com.example.reconcile.R;
 import com.example.reconcile.ViewModel.FriendlistViewModel;
 import com.example.reconcile.repository.Friend;
@@ -31,7 +32,7 @@ public class FriendListActivity extends AppCompatActivity  implements View.OnCli
     FirebaseAuth auth;
     TextView textView;
     ImageButton profileButton;
-    FloatingActionButton addNewFriendButton;
+    FloatingActionButton addNewFriendButton,logoutButton;
 
     @Override
     public void onClick(View v) {
@@ -44,19 +45,28 @@ public class FriendListActivity extends AppCompatActivity  implements View.OnCli
             Intent intent = new Intent(FriendListActivity.this,ChatRoomActivity.class);
             startActivity(intent);
         }
+        if(v == logoutButton){
+            auth.signOut();
+            Intent intent = new Intent(FriendListActivity.this,LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private  ArrayList<Friend> friendlist;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        DaggerActivityComponent.create().inject(this);
         setContentView(R.layout.activity_friendlist);
         //Dagger.create().inject(this);
 
         profileButton = findViewById(R.id.profileImageButton);
         addNewFriendButton = findViewById(R.id.fb1);
+        logoutButton = findViewById(R.id.logout);
         profileButton.setOnClickListener(this);
         addNewFriendButton.setOnClickListener(this);
+        logoutButton.setOnClickListener(this);
         //friendlistview1 = findViewById(R.id.friendlistview1);
         friendlistViewModel = ViewModelProviders.of(this).get(FriendlistViewModel.class);
         /*friendlistViewModel.getFriendlist().observe(this, new Observer<List<Friend>>() {
