@@ -26,19 +26,10 @@ class ChatRoomActivity : AppCompatActivity() , View.OnClickListener {
     val chatRoomViewModel : ChatRoomViewModel by lazy {
         ViewModelProviders.of(this).get(ChatRoomViewModel::class.java)
     }
-    //val listView : ListView = findViewById(R.id.chatroomList)
-    val chatList : MutableList<ChatRoom> = ArrayList()
-
-    init {
-
-
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_room)
-        chatList.add(ChatRoom(167454))
         fb1.setOnClickListener(this)
         //TODO: GETTER rooms
         chatRoomViewModel.rooms.observe(this, Observer {
@@ -51,9 +42,11 @@ class ChatRoomActivity : AppCompatActivity() , View.OnClickListener {
                 override fun convert(p0: ViewHolder?, p1: ChatRoom?, p2: Int) {
                     p0?.setText(R.id.content, "" + p1?.name + " by " + p1?.ownerName)
 
-                    /*p0?.setOnClickListener(R.id.content) {
+                    p0?.setOnClickListener(R.id.content) {
                         //chatRoomViewModel.insertChatRoom(123)
-                    }*/
+                        startActivity(Intent(this@ChatRoomActivity, ChatActivity::class.java )
+                            .putExtra("chatRoomId",p1?.uid))
+                    }
 
                     /*p0?.setOnClickListener(R.id.btnDelete, View.OnClickListener {
                         Toast.makeText(this@ListViewDelDemoActivity, "删除:$position", Toast.LENGTH_SHORT)

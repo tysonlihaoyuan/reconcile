@@ -2,6 +2,7 @@ package com.example.reconcile.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.example.reconcile.DI.Component.ActivityComponent
 import com.example.reconcile.DI.Component.DaggerActivityComponent
@@ -10,6 +11,7 @@ import com.example.reconcile.ViewModel.data.ChatRoom
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import kotlinx.android.synthetic.main.activity_new_room.*
+import java.util.*
 import javax.inject.Inject
 
 class NewRoomActivity : AppCompatActivity() , View.OnClickListener{
@@ -32,7 +34,8 @@ class NewRoomActivity : AppCompatActivity() , View.OnClickListener{
         database.add(ChatRoom(id = 10101,
             name = roomName.text.toString(),
             password = passWord.text.toString(),
-            ownerName = auth.currentUser?.displayName.toString()))
+            ownerName = auth.currentUser?.displayName.toString(),
+            uid = UUID.randomUUID().toString()))
         finish()
     }
 

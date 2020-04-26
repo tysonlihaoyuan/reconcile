@@ -8,10 +8,12 @@ import com.example.reconcile.DI.Module.UserAuthModule
 import com.example.reconcile.RegisterActivity
 import com.example.reconcile.ViewModel.AuthViewModel
 import com.example.reconcile.ViewModel.ChatRoomViewModel
+import com.example.reconcile.ViewModel.ChatViewModel
 import dagger.Component
 
 @Component(modules = [UserAuthModule::class, DatabaseModule::class])
 interface ViewModelComponent {
     fun inject(authViewModel: AuthViewModel)
     fun inject(ViewModel: ChatRoomViewModel)
+    fun inject(chatViewModel: ChatViewModel)
 }
