@@ -49,6 +49,6 @@
         android:layout_margin="16dp"
         android:clickable="true"
         app:srcCompat="@mipmap/ic_action_add_foreground"  />
-    >>>>>>> init
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

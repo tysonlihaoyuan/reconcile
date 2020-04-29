@@ -17,6 +17,8 @@ import com.example.reconcile.R;
 import com.example.reconcile.ViewModel.data.Friend;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class AddfriendActivity extends AppCompatActivity {
@@ -26,8 +28,8 @@ public class AddfriendActivity extends AppCompatActivity {
 
     private EditText userStatus;
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference ref = database.getReference().child("Friend");
+    FirebaseFirestore database = FirebaseFirestore.getInstance();
+    CollectionReference ref = database.collection("users");
 
     @Override
     protected void onCreate(Bundle saveInstanceState){
@@ -47,7 +49,7 @@ public class AddfriendActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Friend newfriend = new Friend(username.getText().toString(), usermail.getText().toString(), userStatus.getText().toString());
-                        ref.push().setValue(newfriend);
+                        ref.add(newfriend);
                         Toast.makeText(AddfriendActivity.this, "data is added", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(AddfriendActivity.this, FriendListActivity.class);
                         startActivity(intent);

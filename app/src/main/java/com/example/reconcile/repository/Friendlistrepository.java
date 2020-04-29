@@ -1,12 +1,21 @@
 package com.example.reconcile.repository;
 
 
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import android.content.Context;
+import android.media.MediaPlayer;
+import android.provider.DocumentsContract;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -19,16 +28,26 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.internal.$Gson$Preconditions;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 public class Friendlistrepository {
     private static Friendlistrepository instance;
-
+    private static final String TAG = "update activite";
     private ArrayList<Friend> friendlist = new ArrayList<>();
-    private DatabaseReference mDatabas = FirebaseDatabase.getInstance().getReference();
     private MutableLiveData<ArrayList<Friend>> friend = new MutableLiveData<>();
     static Context mcontext;
     static DataLoadListener mdataLoadListener;
@@ -54,30 +73,58 @@ public class Friendlistrepository {
     }
 
     public void loadFriend(){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference();
-        Query query = ref.child("Friend");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        CollectionReference ref = database.collection("users");
+//        Query query = ref.child("Friend");
+//        query.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                for (DataSnapshot snapshot: dataSnapshot.getChildren()){
+//
+//                    friendlist.add(snapshot.getValue(Friend.class));
+//
+//                }
+//                mdataLoadListener.onNameLoad();
+//                friend.postValue(friendlist);
+//            }
+//
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+        ref.get().addOnSuccessListener( new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot snapshot: dataSnapshot.getChildren()){
-
-                    friendlist.add(snapshot.getValue(Friend.class));
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for(QueryDocumentSnapshot qc : queryDocumentSnapshots){
+                    Friend f = qc.toObject(Friend.class);
+                    friendlist.add(f);
 
                 }
                 mdataLoadListener.onNameLoad();
                 friend.postValue(friendlist);
             }
+        } );
+
+//        ref.addSnapshotListener(new OnCompleteListener<QuerySnapshot>() {
+//                                            @Override
+//                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                                                if (task.isSuccessful()) {
+//                                                    for (QueryDocumentSnapshot document : task.getResult()) {
+//                                                        Friend f = document.toObject(Friend.class);
+//                                                        friendlist.add(f);
+//                                                    }
+//                                                }
+//                                                mdataLoadListener.onNameLoad();
+//                                                friend.postValue(friendlist);
+//                                            }
+//                                        }
+//
+//        );
 
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
-
-
-    }
-
+}
 }
