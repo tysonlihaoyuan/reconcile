@@ -1,56 +1,34 @@
 package com.example.reconcile.ViewModel;
 
-import android.os.AsyncTask;
+
+import android.content.Context;
+
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.reconcile.repository.Friend;
+
+import com.example.reconcile.ViewModel.data.Friend;
 import com.example.reconcile.repository.Friendlistrepository;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class FriendlistViewModel extends ViewModel {
 
-    private MutableLiveData<List<Friend>> mfriendlist;
+    private MutableLiveData<ArrayList<Friend>> mfriendlist;
     private Friendlistrepository mRepo;
-    private MutableLiveData<Boolean> mIsUpdate =  new MutableLiveData<>();
-    public void init(){
+
+    public void init(Context context){
         if(mfriendlist != null){
             return;
         }
-        mRepo = Friendlistrepository.getInstance();
-        mfriendlist = mRepo.getFriendlist();
+        mfriendlist = mRepo.getInstance(context).getFriendlist();
+
     }
-    public LiveData<List<Friend>> getFriendlist(){
+    public LiveData<ArrayList<Friend>> getFriendlist(){
         return mfriendlist;
     }
 
-    public void addNewValue (final Friend friend){
-        mIsUpdate.setValue(true);
-        new AsyncTask<Void, Void, Void>(){
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                List<Friend> currentList = mfriendlist.getValue();
-                currentList.add(friend);
-                mfriendlist.postValue(currentList);
-                mIsUpdate.postValue(false);
-            }
 
-            @Override
-            protected Void doInBackground(Void... voids) {
-                try{
-                    Thread.sleep(2000);
-                }catch(InterruptedException e){
-                    e.printStackTrace();
-                }
-                return null;
-            }
-        }.execute();
-    }
-    public LiveData<Boolean> getIsUpdate(){
-        return mIsUpdate;
-    }
 }
