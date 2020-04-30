@@ -13,9 +13,10 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.Query
 import javax.inject.Inject
+import javax.inject.Named
 
 class ChatViewModel(val uid : String) : ViewModel(){
-    @Inject
+    @field:Named("chatroom") @Inject
     internal lateinit var database : CollectionReference
     @Inject
     internal lateinit var auth: FirebaseAuth

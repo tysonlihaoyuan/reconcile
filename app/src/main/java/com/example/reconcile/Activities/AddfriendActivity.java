@@ -39,23 +39,15 @@ public class AddfriendActivity extends AppCompatActivity {
 
         username = findViewById(R.id.userName);
         usermail = findViewById(R.id.userEmail);
+        userStatus = findViewById(R.id.userStatus);
         addfriendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                username = findViewById(R.id.userName);
-                usermail = findViewById(R.id.userEmail);
-                userStatus = findViewById(R.id.userStatus);
-                addfriendButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Friend newfriend = new Friend(username.getText().toString(), usermail.getText().toString(), userStatus.getText().toString());
-                        ref.add(newfriend);
-                        Toast.makeText(AddfriendActivity.this, "data is added", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(AddfriendActivity.this, FriendListActivity.class);
-                        startActivity(intent);
-                    }
-                });
-
+                Friend newfriend = new Friend(username.getText().toString(), usermail.getText().toString(), userStatus.getText().toString());
+                ref.add(newfriend);
+                Toast.makeText(AddfriendActivity.this, "data is added", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(AddfriendActivity.this, FriendListActivity.class);
+                startActivity(intent);
             }
         });
     }

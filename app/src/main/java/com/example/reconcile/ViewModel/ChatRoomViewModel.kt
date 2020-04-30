@@ -13,12 +13,13 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import javax.inject.Inject
+import javax.inject.Named
 
 
 class ChatRoomViewModel : ViewModel(){
 
 
-    @Inject
+    @field:Named("chatroom")@Inject
     internal lateinit var database : CollectionReference
 
 

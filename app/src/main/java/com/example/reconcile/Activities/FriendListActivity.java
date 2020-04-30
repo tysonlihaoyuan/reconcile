@@ -22,7 +22,7 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.reconcile.ViewModel.DataLoadListener;
+
 import com.example.reconcile.ViewModel.data.Friend;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,13 +31,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 
-public class FriendListActivity extends AppCompatActivity  implements View.OnClickListener, DataLoadListener {
+public class FriendListActivity extends AppCompatActivity  implements View.OnClickListener {
 
     RecyclerView friendlistview1; // the dynamic list view
     FriendListAdapter myadapter;
-
+    private static final String TAG = "friend list act";
     FriendlistViewModel friendlistViewModel;
     @Inject
     FirebaseAuth auth;
@@ -105,17 +106,31 @@ public class FriendListActivity extends AppCompatActivity  implements View.OnCli
         myadapter = new FriendListAdapter(friendlistViewModel.getFriendlist().getValue());
         friendlistview1.setAdapter(myadapter);
 
-    }
-
-
-    @Override
-    public void onNameLoad() {
         friendlistViewModel.getFriendlist().observe(this, new Observer<ArrayList<Friend>>() {
             @Override
             public void onChanged(ArrayList<Friend> friends) {
-                myadapter.notifyDataSetChanged();
+                if (friends != null){
+
+                    myadapter.notifyDataSetChanged();
+                }else{
+                    Log.d(TAG, "list is null");
+                }
             }
         });
+
+
+
     }
+
+
+//    @Override
+//    public void onNameLoad() {
+//        friendlistViewModel.getFriendlist().observe(this, new Observer<ArrayList<Friend>>() {
+//            @Override
+//            public void onChanged(ArrayList<Friend> friends) {
+//                myadapter.notifyDataSetChanged();
+//            }
+//        });
+//    }
 }
 
