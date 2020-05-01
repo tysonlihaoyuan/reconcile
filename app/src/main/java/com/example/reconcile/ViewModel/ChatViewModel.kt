@@ -6,15 +6,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 import com.example.reconcile.DI.Component.DaggerViewModelComponent
+import com.example.reconcile.Util.requestStatus
 import com.example.reconcile.ViewModel.data.message
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.Query
 import javax.inject.Inject
 
 class ChatViewModel(val uid : String) : ViewModel(){
     @Inject
     internal lateinit var database : CollectionReference
+    @Inject
+    internal lateinit var auth: FirebaseAuth
     private lateinit var chatDocumentReference : DocumentReference
     val recentChatList : MutableLiveData<List<message>> = MutableLiveData()
 
@@ -31,8 +35,10 @@ class ChatViewModel(val uid : String) : ViewModel(){
                 else {
                     chatDocumentReference = documents.documents[0].reference
                         .also {
-                            Log.d(TAG, it.path)
+
                             it.collection("chatHistory")
+                                .orderBy("time", Query.Direction.DESCENDING)
+                                .limit(15)
                                 .addSnapshotListener{snapshot, e ->
                                     if(e != null){
                                         Log.e(TAG, e.toString())
@@ -41,7 +47,8 @@ class ChatViewModel(val uid : String) : ViewModel(){
                                     snapshot?.documents?.forEach {
                                         it.toObject(message::class.java)?.also { message ->
                                             Log.d(TAG, "" + message.message)
-                                            list.add(message)
+                                            list.add(0,message)
+                                            //list.add(message)
                                         }
                                     }
                                     recentChatList.postValue(list)
@@ -69,10 +76,22 @@ class ChatViewModel(val uid : String) : ViewModel(){
         }*/
     }
 
-    fun sendMessage(message: String){
-        chatDocumentReference?.collection("chatHistory").add(message(message = message)).addOnCompleteListener {
-            Log.d(TAG, "done")
-        }
+    fun sendMessage(message: String, requestCallBack: (requestStatus) -> Unit) {
+        chatDocumentReference?.collection("chatHistory")
+            .add(
+                message(
+                    message = message,
+                    ownerName = auth.currentUser!!.displayName ?: "Mysterious Person",
+                    time = System.currentTimeMillis()
+                )
+            )
+            .addOnSuccessListener {
+                Log.d(TAG, "message sent successfully")
+                requestCallBack(requestStatus.SUCESS)
+            }.addOnFailureListener {
+                Log.d(TAG, "exception $it")
+                requestCallBack(requestStatus.FAIL)
+            }
     }
 
     companion object{

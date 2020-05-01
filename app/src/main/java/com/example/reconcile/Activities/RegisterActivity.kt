@@ -59,7 +59,9 @@ class RegisterActivity : AppCompatActivity() , View.OnClickListener{
                 //Registration OK
                 FirebaseFirestore.getInstance()
                     .document("users/${FirebaseAuth.getInstance().currentUser?.uid}")
-                    .set(mapOf("activeStatus" to 1, "email" to userEmail))
+                    .set(mapOf("userName" to "dumbass $userEmail",
+                        "userStatus" to "Bit",
+                        "useremail" to userEmail))
 
                 ToastUtil.also { it.showToast(this, it.REGISTER_SUCCESSFUL_SIGNING_IN) }
                 startActivity(Intent(this, FriendListActivity::class.java ))
