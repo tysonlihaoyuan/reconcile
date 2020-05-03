@@ -8,11 +8,14 @@ import android.view.View
 import com.example.reconcile.Activities.FriendListActivity
 import com.example.reconcile.Activities.LoginActivity
 import com.example.reconcile.DI.Component.DaggerActivityComponent
+import com.example.reconcile.Service.FCMService
 import com.example.reconcile.Util.ToastUtil
+import com.example.reconcile.ViewModel.data.User
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_register.*
 import javax.inject.Inject
 
@@ -59,9 +62,10 @@ class RegisterActivity : AppCompatActivity() , View.OnClickListener{
                 //Registration OK
                 FirebaseFirestore.getInstance()
                     .document("users/${FirebaseAuth.getInstance().currentUser?.uid}")
-                    .set(mapOf("userName" to "dumbass $userEmail",
-                        "userStatus" to "Bit",
-                        "useremail" to userEmail))
+                    .set(User(userEmail,userEmail,userEmail))
+                FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
+                    FCMService.addTokenToFirestore(it.token)
+                }
 
                 ToastUtil.also { it.showToast(this, it.REGISTER_SUCCESSFUL_SIGNING_IN) }
                 startActivity(Intent(this, FriendListActivity::class.java ))

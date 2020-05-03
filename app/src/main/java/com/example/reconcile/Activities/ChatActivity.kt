@@ -1,19 +1,15 @@
 package com.example.reconcile.Activities
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.reconcile.R
 import com.example.reconcile.Util.ToastUtil
 import com.example.reconcile.Util.ToastUtil.MESSAGE_SEND_FAIL
-import com.example.reconcile.Util.requestStatus
-import com.example.reconcile.ViewModel.AuthViewModel
+import com.example.reconcile.Util.Enums.requestStatus
 import com.example.reconcile.ViewModel.ChatViewModel
-import com.example.reconcile.ViewModel.data.ChatRoom
 import com.example.reconcile.ViewModel.data.message
 import com.example.reconcile.ViewModel.viewModelFactory.ChatViewModelFactory
 import com.mcxtzhang.commonadapter.lvgv.CommonAdapter

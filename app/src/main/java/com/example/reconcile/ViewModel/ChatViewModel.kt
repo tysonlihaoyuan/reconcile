@@ -1,12 +1,10 @@
 package com.example.reconcile.ViewModel
 
-import android.provider.Settings
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProviders
 import com.example.reconcile.DI.Component.DaggerViewModelComponent
-import com.example.reconcile.Util.requestStatus
+import com.example.reconcile.Util.Enums.requestStatus
 import com.example.reconcile.ViewModel.data.message
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
