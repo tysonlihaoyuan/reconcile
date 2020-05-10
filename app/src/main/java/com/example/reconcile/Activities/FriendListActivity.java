@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.reconcile.DI.Component.DaggerActivityComponent;
@@ -21,9 +22,9 @@ import com.example.reconcile.ViewModel.FriendlistViewModel;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.mcxtzhang.commonadapter.rv.CommonAdapter;
 
-
-import com.example.reconcile.ViewModel.data.Friend;
+import com.example.reconcile.ViewModel.data.User;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,8 +38,8 @@ import javax.inject.Named;
 public class FriendListActivity extends AppCompatActivity  implements View.OnClickListener {
 
     RecyclerView friendlistview1; // the dynamic list view
-    FriendListAdapter myadapter;
-    private static final String TAG = "friend list act";
+
+    private static final String TAG = FriendListActivity.class.getSimpleName();
     FriendlistViewModel friendlistViewModel;
     @Inject
     FirebaseAuth auth;
@@ -46,7 +47,7 @@ public class FriendListActivity extends AppCompatActivity  implements View.OnCli
     ImageButton profileButton;
 
     FloatingActionButton addNewFriendButton,logoutButton;
-
+    CommonAdapter<User> myAdapter;
 
     FloatingActionButton chatFriendButton;
 
@@ -77,7 +78,7 @@ public class FriendListActivity extends AppCompatActivity  implements View.OnCli
         }
     }
 
-    private  ArrayList<Friend> friendlist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -86,16 +87,17 @@ public class FriendListActivity extends AppCompatActivity  implements View.OnCli
 
 
         setContentView(R.layout.activity_friendlist);
-        //Dagger.create().inject(this);
+
 
         profileButton = findViewById(R.id.profileImageButton);
-
-
         addNewFriendButton = findViewById(R.id.addfriend);
         chatFriendButton = findViewById(R.id.fb1);
+        logoutButton =findViewById(R.id.logout);
+
         profileButton.setOnClickListener(this);
         addNewFriendButton.setOnClickListener(this);
         chatFriendButton.setOnClickListener(this);
+        logoutButton.setOnClickListener(this);
 
         friendlistview1 = findViewById(R.id.FriendList);
         friendlistview1.setHasFixedSize(true);
@@ -103,15 +105,25 @@ public class FriendListActivity extends AppCompatActivity  implements View.OnCli
 
         friendlistViewModel = ViewModelProviders.of(this).get(FriendlistViewModel.class);
         friendlistViewModel.init(FriendListActivity.this);
-        myadapter = new FriendListAdapter(friendlistViewModel.getFriendlist().getValue());
-        friendlistview1.setAdapter(myadapter);
 
-        friendlistViewModel.getFriendlist().observe(this, new Observer<ArrayList<Friend>>() {
+        myAdapter =  new CommonAdapter<User>(this, friendlistViewModel.getFriendlist().getValue(), R.layout.frienditem) {
             @Override
-            public void onChanged(ArrayList<Friend> friends) {
+            public void convert(com.mcxtzhang.commonadapter.rv.ViewHolder viewHolder, User user) {
+
+                ((TextView) viewHolder.itemView.findViewById(R.id.friend)).setText(user.getUserName());
+            }
+        };
+
+        friendlistview1.setAdapter(myAdapter);
+       // Log.d(TAG, "list size is " + friendlistViewModel.getFriendlist().getValue().size());
+
+        friendlistViewModel.getFriendlist().observe(this, new Observer<ArrayList<User>>() {
+            @Override
+            public void onChanged(ArrayList<User> friends) {
                 if (friends != null){
 
-                    myadapter.notifyDataSetChanged();
+                    Log.d(TAG, "list size is " + friends.size());
+                    myAdapter.notifyDataSetChanged();
                 }else{
                     Log.d(TAG, "list is null");
                 }
