@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_register.*
+import java.util.*
 import javax.inject.Inject
 
 class RegisterActivity : AppCompatActivity() , View.OnClickListener{
@@ -61,8 +62,8 @@ class RegisterActivity : AppCompatActivity() , View.OnClickListener{
                 Log.d(TAG, "register user with email ${userEmail} is successful")
                 //Registration OK
                 FirebaseFirestore.getInstance()
-                    .document("users/${FirebaseAuth.getInstance().currentUser?.uid}")
-                    .set(User(userEmail,userEmail,userEmail))
+                    .document("users/${UUID.randomUUID().toString()}")
+                    .set(User(userEmail,userEmail,userEmail,uid = FirebaseAuth.getInstance().currentUser!!.uid))
                 FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
                     FCMService.addTokenToFirestore(it.token)
                 }
