@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.ChatActivity"></activity>
         <activity android:name=".Activities.NewRoomActivity" />
-        <activity android:name=".Activities.ChatRoomActivity" />
+        <activity android:name=".Activities.ChatRoomsActivity" />
         <activity android:name=".Activities.AuthEditActivity" />
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>

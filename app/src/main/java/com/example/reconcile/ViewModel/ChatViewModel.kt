@@ -56,6 +56,7 @@ class ChatViewModel(val currentChatRoomUid : String/* uid of chat object in chat
         Log.d(TAG,"Init")
         DaggerViewModelComponent.create().inject(this)
 
+        Log.d("testtest current user doc refpath is", "${currentUserDocRef.path}")
         currentUserDocRef.get().addOnSuccessListener {
             user = it.toObject(User::class.java)
             user?.subscribedChatRoomUID?.let {
@@ -115,14 +116,14 @@ class ChatViewModel(val currentChatRoomUid : String/* uid of chat object in chat
                 // user already has subscribed to this chatRoom
                 if(it) callback(requestStatus.FAIL).also { Log.d(TAG, "state did not change, subscribed already on server") }
             }
-            user?.subscribedChatRoomUID?.add(currentChatRoomUid).also {
+            user?.subscribedChatRoomUID?.add(currentChatRoomUid)//.also {
                 currentUserDocRef.set(user!!)
                 subscribeStatus.value = true
                 //add user uid from chat
                 chatRoom?.subscribedUserUID?.add(user?.uid!!)
                 chatDocumentReference.set(chatRoom!!)
                 callback(requestStatus.SUCESS)
-            }
+            //}
         }
     }
 

@@ -62,7 +62,7 @@ class RegisterActivity : AppCompatActivity() , View.OnClickListener{
                 Log.d(TAG, "register user with email ${userEmail} is successful")
                 //Registration OK
                 FirebaseFirestore.getInstance()
-                    .document("users/${UUID.randomUUID().toString()}")
+                    .document("users/${FirebaseAuth.getInstance().currentUser!!.uid}")
                     .set(User(userEmail,userEmail,userEmail,uid = FirebaseAuth.getInstance().currentUser!!.uid))
                 FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
                     FCMService.addTokenToFirestore(it.token)
