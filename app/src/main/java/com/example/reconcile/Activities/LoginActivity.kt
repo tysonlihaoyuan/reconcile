@@ -8,10 +8,12 @@ import android.view.View
 import com.example.reconcile.R
 import com.example.reconcile.RegisterActivity
 import com.example.reconcile.DI.Component.DaggerActivityComponent
+import com.example.reconcile.Service.FCMService
 import com.example.reconcile.Util.ToastUtil
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.email
 import kotlinx.android.synthetic.main.activity_register.password
@@ -25,7 +27,7 @@ class LoginActivity : AppCompatActivity() , View.OnClickListener{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         FirebaseAuth.getInstance().currentUser?.let {
-            Log.d(TAG, "LoggedIn Already user email is ${it.email}")
+            Log.d(TAG, "Logged in Already user email is ${it.email}")
             startActivity(Intent(this, FriendListActivity::class.java))
             finish()
         }
@@ -49,6 +51,9 @@ class LoginActivity : AppCompatActivity() , View.OnClickListener{
                 Log.d(RegisterActivity.TAG, "login user with email ${userEmail} is successful")
                 //login OK
                 ToastUtil.also { it.showToast(this, it.LOGIN_SUCCESSFUL) }
+                FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
+                    FCMService.addTokenToFirestore(it.token)
+                }
                 startActivity(Intent(this, FriendListActivity::class.java ).addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
             } else {
                 //Registration error

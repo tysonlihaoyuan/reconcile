@@ -1,4 +1,4 @@
-package com.example.reconcile.Util
+package com.example.reconcile.Util.Enums
 
 enum class requestStatus {
     SUCESS,

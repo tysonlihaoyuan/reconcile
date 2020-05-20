@@ -7,6 +7,7 @@ import android.view.View
 import com.example.reconcile.DI.Component.ActivityComponent
 import com.example.reconcile.DI.Component.DaggerActivityComponent
 import com.example.reconcile.R
+import com.example.reconcile.Util.ToastUtil
 import com.example.reconcile.ViewModel.data.ChatRoom
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -32,12 +33,19 @@ class NewRoomActivity : AppCompatActivity() , View.OnClickListener{
     }
 
     override fun onClick(v: View?) {
-        database.add(ChatRoom(id = 10101,
-            name = roomName.text.toString(),
-            password = passWord.text.toString(),
-            ownerName = auth.currentUser?.displayName.toString(),
-            uid = UUID.randomUUID().toString()))
-        finish()
+        database.add(
+            ChatRoom(
+                id = 10101,
+                name = roomName.text.toString(),
+                password = passWord.text.toString(),
+                ownerName = auth.currentUser?.displayName.toString(),
+                uid = UUID.randomUUID().toString()
+            )
+        ).addOnSuccessListener {
+            finish()
+        }.addOnFailureListener {
+            ToastUtil.showToast(this,"Fail to add chat room.")
+        }
     }
 
 }

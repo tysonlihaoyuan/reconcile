@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".Activities.ChatActivity">
 
+    <Button
+        android:id="@+id/subsceibe_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="subscribe"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/unsubscribe_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="unsubscribe"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ListView
         android:id="@+id/recycler_view_messages"
         android:layout_width="0dp"
@@ -13,7 +29,9 @@
         app:layout_constraintBottom_toTopOf="@id/relativeLayout_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
+
+    </ListView>
 
 
     <RelativeLayout

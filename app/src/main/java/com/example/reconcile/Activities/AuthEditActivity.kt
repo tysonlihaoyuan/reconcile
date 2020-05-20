@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.reconcile.R
 import com.example.reconcile.Util.ToastUtil
-import com.example.reconcile.Util.requestStatus
+import com.example.reconcile.Util.Enums.requestStatus
 import com.example.reconcile.ViewModel.AuthViewModel
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_auth_edit.*

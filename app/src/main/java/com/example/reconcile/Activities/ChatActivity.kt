@@ -1,6 +1,5 @@
 package com.example.reconcile.Activities
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,10 +9,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.reconcile.R
 import com.example.reconcile.Util.ToastUtil
 import com.example.reconcile.Util.ToastUtil.MESSAGE_SEND_FAIL
-import com.example.reconcile.Util.requestStatus
-import com.example.reconcile.ViewModel.AuthViewModel
+import com.example.reconcile.Util.Enums.requestStatus
 import com.example.reconcile.ViewModel.ChatViewModel
-import com.example.reconcile.ViewModel.data.ChatRoom
 import com.example.reconcile.ViewModel.data.message
 import com.example.reconcile.ViewModel.viewModelFactory.ChatViewModelFactory
 import com.mcxtzhang.commonadapter.lvgv.CommonAdapter
@@ -40,7 +37,24 @@ class ChatActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         }
+        if(v == subsceibe_button){
+            chatViewModel.subscribe {
+                when(it){
+                    requestStatus.SUCESS -> ToastUtil.showToast(this, "subscribed")
+                    else -> ToastUtil.showToast(this, "fail to subscribe")
+                }
+            }
+        }
+        if(v == unsubscribe_button){
+            chatViewModel.unsubscribe {
+                when(it){
+                    requestStatus.SUCESS -> ToastUtil.showToast(this, "unsubscribed")
+                    else -> ToastUtil.showToast(this, "fail to unsubscribe")
+                }
+            }
+        }
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +63,11 @@ class ChatActivity : AppCompatActivity(), View.OnClickListener {
             ChatViewModelFactory(intent.getStringExtra("chatRoomId")))
             .get(ChatViewModel::class.java)
         imageView_send.setOnClickListener(this)
+        subsceibe_button.setOnClickListener(this)
+        unsubscribe_button.setOnClickListener(this)
+        chatViewModel.subscribeStatus.observe(this, Observer {
+            Log.d(TAG, "Current subscribe status is $it")
+        })
         chatViewModel.recentChatList.observe(this, Observer{
             recycler_view_messages.adapter = object : CommonAdapter<message>(
                 this,
