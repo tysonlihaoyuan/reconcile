@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/FriendList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 
     <ImageButton
         android:id="@+id/profileImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
+        android:layout_gravity = "top|right"
         app:srcCompat="@android:drawable/ic_menu_myplaces" />
 
 
@@ -24,9 +36,19 @@
         android:id="@+id/fb1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:layout_gravity = "bottom|right"
+
+        android:layout_gravity="bottom|center"
         android:layout_margin="16dp"
-        app:srcCompat="@mipmap/ic_action_add_foreground" />
+        android:clickable="true"
+        />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addfriend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        app:srcCompat="@mipmap/ic_action_add_foreground"  />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

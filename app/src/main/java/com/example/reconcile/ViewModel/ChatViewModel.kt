@@ -14,13 +14,16 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.Query
 import java.lang.Exception
 import javax.inject.Inject
+import javax.inject.Named
+
 
 class ChatViewModel(val currentChatRoomUid : String/* uid of chat object in chats collection*/) : ViewModel(){
 
 
+    @field:Named("chatroom")
     @Inject //reference to collection of all chats
     internal lateinit var chatRoomsCollectionReference : CollectionReference
-
+  
     @Inject
     internal lateinit var auth: FirebaseAuth
 

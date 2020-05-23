@@ -14,10 +14,11 @@ import com.google.firebase.firestore.CollectionReference
 import kotlinx.android.synthetic.main.activity_new_room.*
 import java.util.*
 import javax.inject.Inject
+import javax.inject.Named
 
 class NewRoomActivity : AppCompatActivity() , View.OnClickListener{
 
-    @Inject
+   @field:Named("users") @Inject
     internal lateinit var database : CollectionReference
 
     @Inject
